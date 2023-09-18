@@ -9,6 +9,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const { playerName, setPlayerName } = usePlayerState();
 
+const shouldStartGame = ref(false);
 const showEditPlayerNameModal = ref(false);
 const playerNameInput = ref(playerName.value);
 
@@ -16,9 +17,15 @@ function startGame() {
   router.push('/game');
 }
 
+function handleOpenModal() {
+  playerNameInput.value = playerName.value;
+  showEditPlayerNameModal.value = true;
+}
+
 function handlePlayButton() {
-  if (!playerNameInput.value) {
-    showEditPlayerNameModal.value = true;
+  if (!playerName.value) {
+    shouldStartGame.value = true;
+    handleOpenModal();
     return;
   }
 
@@ -28,7 +35,11 @@ function handlePlayButton() {
 function handleSubmitName() {
   showEditPlayerNameModal.value = false;
   setPlayerName(playerNameInput.value);
-  startGame();
+
+  if (shouldStartGame.value) {
+    shouldStartGame.value = false;
+    startGame();
+  }
 }
 
 function handleCloseModal() {
@@ -78,6 +89,24 @@ function handleCloseModal() {
           </MarkerButton>
         </div>
       </template>
+
+      <template #nav>
+        <div
+          v-if="playerName"
+          class="w-full text-center text-xs"
+        >
+            Playing as <span class="text-[#04e35d] text-sm">{{ playerName }}</span>
+
+          <div class="flex justify-center">
+            <MarkerButton
+              class="underline"
+              @click="handleOpenModal"
+            >
+              Change
+            </MarkerButton>
+          </div>
+        </div>
+      </template>
     </BasicLayout>
   
     <Transition
@@ -89,13 +118,8 @@ function handleCloseModal() {
         v-if="showEditPlayerNameModal"
       >
         <div class="border border-neutral-800 bg-[#14532d] rounded p-10 max-w-[30rem]">
-          <div class="w-full">
-            <p class="text-lg">
-              Please enter your name
-            </p>
-            <p class="text-sm mt-2">
-              (Don't worry, you can be change it later in the settings menu)
-            </p>
+          <div class="w-full text-lg">
+            Please enter your name
           </div>
     
           <input

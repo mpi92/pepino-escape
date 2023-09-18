@@ -6,7 +6,7 @@ const supported = !isMobile && innerWidth >= 1000 && innerHeight >= 800;
 
 <template>
     <div
-      class="flex items-center justify-center w-screen h-screen text-neutral-100"
+      class="flex items-center justify-center w-screen h-screen text-neutral-100 font-main"
     >
     <div
       v-if="!supported"
@@ -17,7 +17,7 @@ const supported = !isMobile && innerWidth >= 1000 && innerHeight >= 800;
 
     <div
       v-else
-        class="bg-neutral-900/90 border border-[#14532d] rounded shadow-main shadow-2xl w-[1000px] h-[800px] box-content"
+        class="bg-neutral-900/80 border border-[#14532d] rounded shadow-main shadow-2xl w-[1000px] h-[800px] box-content"
       >
       <RouterView
         v-slot="{ Component }"

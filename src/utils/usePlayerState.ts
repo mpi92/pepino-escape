@@ -11,6 +11,7 @@ if (data) {
 
 function setPlayerName(name: string) {
   localStorage.setItem('pepino-data', JSON.stringify({ player: name }));
+  playerName.value = name;
 }
 
 export default function usePlayerState() {

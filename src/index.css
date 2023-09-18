@@ -20,8 +20,12 @@ body {
 
 body {
   background: url('/images/body_bg.svg');
-  font-family: Play;
   user-select: none;
+}
+
+.font-main {
+  font-family: Play;
+  text-shadow: none;
 }
 
 .font-bungee {
